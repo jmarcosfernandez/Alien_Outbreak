@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "StateMachine.h"
 #include "Alien_OutbreakCharacter.generated.h"
+
 
 UCLASS(config=Game)
 class AAlien_OutbreakCharacter : public ACharacter
@@ -33,6 +35,11 @@ protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
+
+	StateMachine* SM;
+
+	
+
 
 
 public:
