@@ -12,7 +12,7 @@ class ALIEN_OUTBREAK_API State_Hurt : public State
 {
 public:
 	State_Hurt();
-	~State_Hurt();
+	virtual ~State_Hurt();
 	void tick() override;
 	void input() override;
 	void enter() override;

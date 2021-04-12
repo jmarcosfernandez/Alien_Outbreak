@@ -12,7 +12,7 @@ class ALIEN_OUTBREAK_API State_Dash : public State
 {
 public:
 	State_Dash();
-	~State_Dash();
+	virtual ~State_Dash();
 	void tick() override;
 	void input() override;
 	void enter() override;

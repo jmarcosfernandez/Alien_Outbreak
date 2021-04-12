@@ -12,7 +12,7 @@ class ALIEN_OUTBREAK_API State_Jump : public State
 {
 public:
 	State_Jump();
-	~State_Jump();
+	virtual ~State_Jump();
 	void tick() override;
 	void input() override;
 	void enter() override;

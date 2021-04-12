@@ -36,3 +36,4 @@ protected:
 
 	map<string, State> stateDictionary;
 };
+

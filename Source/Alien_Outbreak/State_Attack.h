@@ -12,7 +12,7 @@ class ALIEN_OUTBREAK_API State_Attack : public State
 {
 public:
 	State_Attack();
-	~State_Attack();
+	virtual ~State_Attack();
 	void tick() override;
 	void input() override;
 	void enter() override;

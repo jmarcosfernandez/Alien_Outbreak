@@ -11,7 +11,7 @@ class ALIEN_OUTBREAK_API State
 {
 public:
 	State();
-	~State();
+	virtual ~State();
 	virtual void tick();
 	virtual void input();
 	

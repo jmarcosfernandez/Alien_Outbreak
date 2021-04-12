@@ -12,7 +12,7 @@ class ALIEN_OUTBREAK_API State_Death : public State
 {
 public:
 	State_Death();
-	~State_Death();
+	virtual ~State_Death();
 	void tick() override;
 	void input() override;
 	void enter() override;

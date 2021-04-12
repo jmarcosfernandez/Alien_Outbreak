@@ -14,6 +14,7 @@ State_Idle::~State_Idle()
 
 void State_Idle::tick()
 {
+	
 }
 
 void State_Idle::input() 

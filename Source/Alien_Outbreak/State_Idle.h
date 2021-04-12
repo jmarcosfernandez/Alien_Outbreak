@@ -11,7 +11,7 @@ class ALIEN_OUTBREAK_API State_Idle : public State
 {
 public:
 	State_Idle();
-	~State_Idle();
+	virtual ~State_Idle();
 	void tick() override;
 	void input() override;
 	void enter() override;
