@@ -15,4 +15,6 @@ public:
 	~State_Dash();
 	void tick() override;
 	void input() override;
+	void enter() override;
+	void exit() override;
 };

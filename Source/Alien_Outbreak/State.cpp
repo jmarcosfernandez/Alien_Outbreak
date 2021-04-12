@@ -18,3 +18,11 @@ void State::tick()
 void State::input()
 {
 }
+
+void State::enter()
+{
+}
+
+void State::exit()
+{
+}

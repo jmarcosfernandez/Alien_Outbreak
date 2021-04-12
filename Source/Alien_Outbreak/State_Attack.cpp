@@ -18,3 +18,11 @@ void State_Attack::tick()
 void State_Attack::input()
 {
 }
+
+void State_Attack::enter()
+{
+}
+
+void State_Attack::exit()
+{
+}

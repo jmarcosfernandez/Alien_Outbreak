@@ -14,4 +14,7 @@ public:
 	~State_Idle();
 	void tick() override;
 	void input() override;
+	void enter() override;
+	void exit() override;
+
 };

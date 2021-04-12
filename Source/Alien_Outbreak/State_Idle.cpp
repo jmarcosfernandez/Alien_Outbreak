@@ -19,3 +19,11 @@ void State_Idle::tick()
 void State_Idle::input() 
 {
 }
+
+void State_Idle::enter()
+{
+}
+
+void State_Idle::exit()
+{
+}

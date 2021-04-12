@@ -18,3 +18,11 @@ void State_Hurt::tick()
 void State_Hurt::input()
 {
 }
+
+void State_Hurt::enter()
+{
+}
+
+void State_Hurt::exit()
+{
+}

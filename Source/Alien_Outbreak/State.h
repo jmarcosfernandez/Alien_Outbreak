@@ -14,4 +14,10 @@ public:
 	~State();
 	virtual void tick();
 	virtual void input();
+	
+	//When you switch to a new state
+	virtual void enter();
+
+	//When you leave a state
+	virtual void exit();
 };

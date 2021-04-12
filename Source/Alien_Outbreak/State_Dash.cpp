@@ -18,3 +18,11 @@ void State_Dash::tick()
 void State_Dash::input()
 {
 }
+
+void State_Dash::enter()
+{
+}
+
+void State_Dash::exit()
+{
+}
