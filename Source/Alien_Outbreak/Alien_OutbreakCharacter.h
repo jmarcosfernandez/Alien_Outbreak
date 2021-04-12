@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
+
 #include "StateMachine.h"
+
+#include "GameFramework/Character.h"
 #include "Alien_OutbreakCharacter.generated.h"
 
 
@@ -36,9 +38,9 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
+
 	StateMachine* SM;
 
-	
 
 
 
