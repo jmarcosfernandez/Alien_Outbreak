@@ -34,6 +34,6 @@ public:
 protected:
 	State* currentState;
 
-	map<string, State> stateDictionary;
+	map<string, State*> stateDictionary;
 };
 
