@@ -38,12 +38,6 @@ protected:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
 
-
-	StateMachine* SM;
-
-
-
-
 public:
 	AAlien_OutbreakCharacter();
 
@@ -52,9 +46,51 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 	public:
 		UPROPERTY(BlueprintReadOnly)
 			float HP = 1.0f;
 		UPROPERTY(EditAnywhere)
 			TSubclassOf<class UPlayerHPWidget> WidgetClass;
+private:
+	enum GameStates { IDLE, MOVE, JUMP, DASH, ATTACK, HURT, DEATH };
+	GameStates State = GameStates::IDLE;
+
+	enum GameEvents { ON_ENTER, ON_UPDATE };
+	GameEvents Event = GameEvents::ON_ENTER;
+
+	void FSMUpdate();
+	void SetFSMState(GameStates newState);
+
+	void Idle_Enter();
+	void Idle_Update();
+	void Idle_Exit();
+
+	void Move_Enter();
+	void Move_Update();
+	void Move_Exit();
+
+	void Jump_Enter();
+	void Jump_Update();
+	void Jump_Exit();
+
+	void Dash_Enter();
+	void Dash_Update();
+	void Dash_Exit();
+
+	void Attack_Enter();
+	void Attack_Update();
+	void Attack_Exit();
+
+	void Hurt_Enter();
+	void Hurt_Update();
+	void Hurt_Exit();
+
+	void Death_Enter();
+	void Death_Update();
+	void Death_Exit();
+};
 };
