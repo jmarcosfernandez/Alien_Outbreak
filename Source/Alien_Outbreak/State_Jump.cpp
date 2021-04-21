@@ -21,7 +21,6 @@ void State_Jump::input()
 
 void State_Jump::enter()
 {
-	//keep any horizontal momentum and use jump function
 }
 
 void State_Jump::exit()

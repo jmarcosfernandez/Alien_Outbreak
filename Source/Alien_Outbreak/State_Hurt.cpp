@@ -21,8 +21,6 @@ void State_Hurt::input()
 
 void State_Hurt::enter()
 {
-	//No actions. Will do the hurt animation and when that animation ends, will exit the state.
-	//if it kills the character, will go into death state before animation
 }
 
 void State_Hurt::exit()

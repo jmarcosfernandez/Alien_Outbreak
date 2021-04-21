@@ -30,14 +30,10 @@ public:
 	StateMachine();
 	~StateMachine();
 
-	void setState(string newState);
-	void transitionTo(string targetState, map<string, State*> dictionary);
-
-	string getCurrentState;
-	map<string, State*> getStateDictionary;
 
 protected:
-	string currentState;
+	State* currentState;
+
 	map<string, State*> stateDictionary;
 };
 

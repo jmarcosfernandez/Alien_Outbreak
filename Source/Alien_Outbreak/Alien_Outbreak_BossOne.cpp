@@ -16,8 +16,6 @@ int attackCoolDown = 3;
 int rockLeft = 0;
 ARockProjectileActor* rocks[3];
 
-//create t-array containers to store it in, t-map is there as well
-
 // Sets default values
 AAlien_Outbreak_BossOne::AAlien_Outbreak_BossOne()
 {
