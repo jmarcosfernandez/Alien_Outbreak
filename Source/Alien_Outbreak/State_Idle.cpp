@@ -23,6 +23,7 @@ void State_Idle::input()
 
 void State_Idle::enter()
 {
+	//default state, can go into any state except death, 
 }
 
 void State_Idle::exit()

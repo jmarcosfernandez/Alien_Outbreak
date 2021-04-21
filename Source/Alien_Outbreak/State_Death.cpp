@@ -21,6 +21,7 @@ void State_Death::input()
 
 void State_Death::enter()
 {
+	//You go into a game over screen, or back to the main menu?
 }
 
 void State_Death::exit()

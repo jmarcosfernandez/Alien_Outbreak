@@ -27,6 +27,7 @@ public:
 		class UStaticMeshComponent* Mesh;
 	UPROPERTY()
 		class USceneComponent* Root;
+private:
 
 	enum GameStates { IDLE, SUMMON, ATTACK, TELEPORT };
 	GameStates State = GameStates::IDLE;
