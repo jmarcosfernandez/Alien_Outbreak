@@ -18,6 +18,12 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	int timeTick;
+	int fps;
+	int summonCoolDown;
+	int attackCoolDown;
+	int teleportCoolDown;
+	TArray<FVector> teleportLocation;
 
 public:	
 	// Called every frame

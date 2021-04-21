@@ -7,10 +7,7 @@
 
 #include "RockProjectileActor.h"
 
-int timeTick = 0;
-int fps = 60;
-int summonCoolDown = 10;
-int attackCoolDown = 3;
+
 
 
 int rockLeft = 0;
@@ -27,6 +24,14 @@ AAlien_Outbreak_BossOne::AAlien_Outbreak_BossOne()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->AttachTo(Root);
+
+	timeTick = 0;
+	fps = 60;
+	summonCoolDown = 10;
+	attackCoolDown = 3;
+	teleportCoolDown = 15;
+
+	teleportLocation.Add(FVector(0, 0, 0));
 }
 
 // Called when the game starts or when spawned
@@ -46,6 +51,9 @@ void AAlien_Outbreak_BossOne::Tick(float DeltaTime)
 	}
 	else if ((timeTick % (attackCoolDown * fps)) == 0 && rockLeft != 0) {
 		SetFSMState(GameStates::ATTACK);
+	}
+	else if (((timeTick % (teleportCoolDown * fps)) == 0)) {
+		//SetFSMState(GameStates::TELEPORT);
 	}
 	else {
 		SetFSMState(GameStates::IDLE);
@@ -153,24 +161,28 @@ void AAlien_Outbreak_BossOne::Summon_Enter()
 	
 	FVector loc = GetActorLocation();
 
+	// Prevent overlap at spawn
+	loc.X += 200;
 	rocks[0] = GetWorld()->SpawnActor<ARockProjectileActor>(loc, GetActorRotation());
+	loc.X += 200;
 	rocks[1] = GetWorld()->SpawnActor<ARockProjectileActor>(loc, GetActorRotation());
+	loc.X += 200;
 	rocks[2] = GetWorld()->SpawnActor<ARockProjectileActor>(loc, GetActorRotation());
 
 	rocks[0]->axis = FVector(0, 0.5, 0.5);
 	rocks[0]->angleAxis = 180.f;
-	rocks[0]->rotateSpeed = 170.f;
+	rocks[0]->rotateSpeed = 140.f;
 	rocks[0]->dimention = FVector(330, 0, 0);
 
 	rocks[1]->axis = FVector(0, -0.5, 0.5);
 	rocks[1]->angleAxis = 90.f;
-	rocks[1]->rotateSpeed = 150.f;
+	rocks[1]->rotateSpeed = 140.f;
 	rocks[1]->dimention = FVector(240, 0, 0);
 
 	rocks[2]->axis = FVector(0, 0, 1);
 	rocks[2]->angleAxis = -90.f;
 	rocks[2]->rotateSpeed = 140.f;
-	rocks[2]->dimention = FVector(150, 0, 0);
+	rocks[2]->dimention = FVector(180, 0, 0);
 }
 
 void AAlien_Outbreak_BossOne::Summon_Update()
