@@ -51,4 +51,10 @@ public:
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+
+	public:
+		UPROPERTY(BlueprintReadOnly)
+			float HP = 1.0f;
+		UPROPERTY(EditAnywhere)
+			TSubclassOf<class UPlayerHPWidget> WidgetClass;
 };
