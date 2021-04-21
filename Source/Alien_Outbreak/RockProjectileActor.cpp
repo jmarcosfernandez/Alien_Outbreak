@@ -35,6 +35,8 @@ ARockProjectileActor::ARockProjectileActor()
 	//direction;
 }
 
+
+
 void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (OtherActor->IsA(AAlien_OutbreakCharacter::StaticClass())) {
@@ -55,12 +57,32 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	//GetWorld()->ForceGarbageCollection(true);
 }
 
+void ARockProjectileActor::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
+	if (OtherActor->IsA(AAlien_OutbreakCharacter::StaticClass())) {
+		UE_LOG(LogTemp, Warning, TEXT("HIT Player!"));
+		// Reduce Player HP
+		this->Destroy();
+	}
+	else if (OtherActor->IsA(AAlien_Outbreak_BossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
+		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
+		// Ignore collision with rock or boss
+	}
+	else {
+		UE_LOG(LogTemp, Warning, TEXT("HIT Wall!"));
+		this->Destroy();
+	}
+
+	//GC
+	//GetWorld()->ForceGarbageCollection(true);
+}
+
 // Called when the game starts or when spawned
 void ARockProjectileActor::BeginPlay()
 {
 	Super::BeginPlay();
 	
 	Mesh->OnComponentBeginOverlap.AddDynamic(this, &ARockProjectileActor::OnOverlapBegin);
+	//Mesh->OnComponentHit.AddDynamic(this, &ARockProjectileActor::OnActorHit);
 }
 
 // Called every frame
