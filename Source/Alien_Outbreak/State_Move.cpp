@@ -17,10 +17,12 @@ void State_Move::tick()
 
 void State_Move::input()
 {
+	//MoveRight is going to go here
 }
 
 void State_Move::enter()
 {
+
 }
 
 void State_Move::exit()

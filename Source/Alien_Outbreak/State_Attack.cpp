@@ -21,6 +21,8 @@ void State_Attack::input()
 
 void State_Attack::enter()
 {
+	//Use attack, no matter what state, other than hurt/death
+	//will take the momentum of other states.
 }
 
 void State_Attack::exit()
