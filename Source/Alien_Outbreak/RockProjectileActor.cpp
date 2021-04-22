@@ -41,6 +41,7 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 {
 	if (OtherActor->IsA(AAlien_OutbreakCharacter::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Player!"));
+
 		// Reduce Player HP
 		this->Destroy();
 	}

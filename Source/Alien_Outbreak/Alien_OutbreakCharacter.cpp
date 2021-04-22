@@ -7,7 +7,9 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "PlayerHPWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
 
 
 AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
@@ -50,6 +52,22 @@ AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
 	
 }
 
+void AAlien_OutbreakCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	auto Widget = CreateWidget<UPlayerHPWidget>(UGameplayStatics::GetPlayerController(this, 0), WidgetClass);
+	Widget->Player = this;
+	Widget->AddToViewport();
+}
+
+void AAlien_OutbreakCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	HP -= 0.0001f;
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 
@@ -81,5 +99,7 @@ void AAlien_OutbreakCharacter::TouchStopped(const ETouchIndex::Type FingerIndex,
 	StopJumping();
 }
 
-
+void AAlien_OutbreakCharacter::PlayerHP_Setter(float new_HP) {
+	HP = new_HP;
+}
 

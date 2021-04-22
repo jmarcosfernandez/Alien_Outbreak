@@ -40,6 +40,7 @@ protected:
 
 public:
 	AAlien_OutbreakCharacter();
+	void PlayerHP_Setter(float new_HP);
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
@@ -49,8 +50,9 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
-	public:
+public:
 		UPROPERTY(BlueprintReadOnly)
 			float HP = 1.0f;
 		UPROPERTY(EditAnywhere)
