@@ -41,6 +41,8 @@ protected:
 public:
 	AAlien_OutbreakCharacter();
 	void PlayerHP_Setter(float new_HP);
+	void onRockHit(float minsHP, float rockY);
+	void knockBack();
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
@@ -52,11 +54,19 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
+	bool knockToLeft;
+	bool knockingBack;
+	float knockBackTime;
+	float knockBackSpeed;
+	int fps;
+	int knockBackCount;
+
 public:
 		UPROPERTY(BlueprintReadOnly)
 			float HP = 1.0f;
 		UPROPERTY(EditAnywhere)
 			TSubclassOf<class UPlayerHPWidget> WidgetClass;
+
 private:
 	enum GameStates { IDLE, MOVE, JUMP, DASH, ATTACK, HURT, DEATH };
 	GameStates State = GameStates::IDLE;

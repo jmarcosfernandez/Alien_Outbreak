@@ -42,7 +42,10 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 	if (OtherActor->IsA(AAlien_OutbreakCharacter::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Player!"));
 
+		float rockY = this->GetActorLocation().Y;
 		// Reduce Player HP
+		((AAlien_OutbreakCharacter *)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.05f, rockY);
+
 		this->Destroy();
 	}
 	else if (OtherActor->IsA(AAlien_Outbreak_BossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
