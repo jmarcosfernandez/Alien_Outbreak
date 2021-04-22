@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 
 #include "StateMachine.h"
+#include "Sound/SoundCue.h"
+#include "Components/AudioComponent.h"
 
 #include "GameFramework/Character.h"
 #include "Alien_OutbreakCharacter.generated.h"
@@ -42,7 +44,6 @@ public:
 	AAlien_OutbreakCharacter();
 	void PlayerHP_Setter(float new_HP);
 	void onRockHit(float minsHP, float rockY);
-	void knockBack();
 
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
@@ -54,13 +55,6 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	bool knockToLeft;
-	bool knockingBack;
-	float knockBackTime;
-	float knockBackSpeed;
-	int fps;
-	int knockBackCount;
-
 public:
 		UPROPERTY(BlueprintReadOnly)
 			float HP = 1.0f;
@@ -68,6 +62,20 @@ public:
 			TSubclassOf<class UPlayerHPWidget> WidgetClass;
 
 private:
+	USoundWave* HurtSound1;
+	USoundWave* HurtSound2;
+	USoundWave* HurtSound3;
+	USoundWave* HurtSound4;
+	USoundWave* HurtSound5;
+	void playHurtSound(int num);
+
+	bool knockToLeft;
+	bool knockingBack;
+	float knockBackTime;
+	float knockBackSpeed;
+	int fps;
+	int knockBackCount;
+
 	enum GameStates { IDLE, MOVE, JUMP, DASH, ATTACK, HURT, DEATH };
 	GameStates State = GameStates::IDLE;
 

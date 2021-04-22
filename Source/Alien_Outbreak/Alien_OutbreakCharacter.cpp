@@ -49,12 +49,26 @@ AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
+	// Setting up Knock Back Variables
 	knockToLeft = true;
 	knockingBack = false;
 	knockBackTime = 0.2;
 	knockBackSpeed = 20.f;
 	knockBackCount = knockBackTime;
 	fps = 60;
+
+	// Loading Hurt Sounds
+	static ConstructorHelpers::FObjectFinder<USoundWave> Hurt1(TEXT("SoundWave'/Game/Sounds/Hurt1'"));
+	HurtSound1 = Hurt1.Object;
+	static ConstructorHelpers::FObjectFinder<USoundWave> Hurt2(TEXT("SoundWave'/Game/Sounds/Hurt2'"));
+	HurtSound2 = Hurt2.Object;
+	static ConstructorHelpers::FObjectFinder<USoundWave> Hurt3(TEXT("SoundWave'/Game/Sounds/Hurt3'"));
+	HurtSound3 = Hurt3.Object;
+	static ConstructorHelpers::FObjectFinder<USoundWave> Hurt4(TEXT("SoundWave'/Game/Sounds/Hurt4'"));
+	HurtSound4 = Hurt4.Object;
+	static ConstructorHelpers::FObjectFinder<USoundWave> Hurt5(TEXT("SoundWave'/Game/Sounds/Hurt5'"));
+	HurtSound5 = Hurt5.Object;
+	
 }
 
 void AAlien_OutbreakCharacter::BeginPlay()
@@ -118,22 +132,33 @@ void AAlien_OutbreakCharacter::PlayerHP_Setter(float new_HP) {
 }
 
 void AAlien_OutbreakCharacter::onRockHit(float minsHP, float rockY) {
+	// Reduce player hp on hit
 	this->HP -= minsHP;
+	if (HP <= 0.f) {
+		// Player Death
+	}
+	
+	// Playe hurt sound
+	playHurtSound(FMath::RandRange(1, 5));
+
+	// Set up knockback
 	float Y = this->GetActorLocation().Y;
 	if (Y > rockY)
 		knockToLeft = true;
 	else
 		knockToLeft = false;
-	knockBack();
-}
-void AAlien_OutbreakCharacter::knockBack() {
 	knockingBack = true;
 	knockBackCount = knockBackTime * fps;
-	if (knockToLeft){
-		UE_LOG(LogTemp, Warning, TEXT("Knocking to left!"));
+}
+
+void AAlien_OutbreakCharacter::playHurtSound(int num) {
+	// Random Play hurt sound
+	switch (num) {
+	case 1: UGameplayStatics::PlaySound2D(this, HurtSound1); break;
+	case 2: UGameplayStatics::PlaySound2D(this, HurtSound2); break;
+	case 3: UGameplayStatics::PlaySound2D(this, HurtSound3); break;
+	case 4: UGameplayStatics::PlaySound2D(this, HurtSound4); break;
+	case 5: UGameplayStatics::PlaySound2D(this, HurtSound5); break;
+	default: UGameplayStatics::PlaySound2D(this, HurtSound1); break;
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Knocking to right!"));
-	} 
 }

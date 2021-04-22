@@ -3,7 +3,7 @@
 
 #include "RockProjectileActor.h"
 #include "Kismet/GameplayStatics.h"
-#include "Alien_Outbreak_BossOne.h"
+#include "Alien_BreakOutBossOne.h"
 #include "Alien_OutbreakCharacter.h"
 
 
@@ -14,14 +14,23 @@ ARockProjectileActor::ARockProjectileActor()
 	PrimaryActorTick.bCanEverTick = true;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
-	//static ConstructorHelpers::FObjectFinder<UStaticMesh>SphereMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>rockAsset(TEXT("StaticMesh'/Game/Objects/UnwrappedRock'"));
+
+	int rand = FMath::RandRange(1,4);
+	FString assetLocation;
+	switch (rand) {
+	case 1: assetLocation = TEXT("StaticMesh'/Game/Objects/Rock'"); break;
+	case 2: assetLocation = TEXT("StaticMesh'/Game/Objects/Rock2'"); break;
+	case 3: assetLocation = TEXT("StaticMesh'/Game/Objects/Rock3'"); break;
+	case 4: assetLocation = TEXT("StaticMesh'/Game/Objects/Rock4'"); break;
+	//case 5: assetLocation = TEXT("StaticMesh'/Game/Objects/UnwrappedRock'"); break;
+	default: assetLocation = TEXT("StaticMesh'/Game/Objects/Rock'"); break;
+	}
+	
+	ConstructorHelpers::FObjectFinder<UStaticMesh>rockAsset(*assetLocation);
 	Mesh->SetStaticMesh(rockAsset.Object);
 	Mesh->SetCollisionProfileName(TEXT("OverlapAll"));
 
 	RootComponent = Mesh;
-
-	SetActorScale3D(GetActorScale3D() * 3.f);
 
 	fireSpeed = 12.f;
 	dimention = FVector(300, 0, 0);
@@ -48,7 +57,7 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 
 		this->Destroy();
 	}
-	else if (OtherActor->IsA(AAlien_Outbreak_BossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
+	else if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
 		// Ignore collision with rock or boss
 	}
@@ -67,7 +76,7 @@ void ARockProjectileActor::OnActorHit(UPrimitiveComponent* HitComponent, AActor*
 		// Reduce Player HP
 		this->Destroy();
 	}
-	else if (OtherActor->IsA(AAlien_Outbreak_BossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
+	else if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
 		// Ignore collision with rock or boss
 	}
@@ -114,7 +123,7 @@ void ARockProjectileActor::Tick(float DeltaTime)
 
 void ARockProjectileActor::rotating(float DeltaTime) {
 	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAlien_Outbreak_BossOne::StaticClass(), FoundActors);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAlien_BreakOutBossOne::StaticClass(), FoundActors);
 
 	FVector NewLocation = this->GetActorLocation();
 
