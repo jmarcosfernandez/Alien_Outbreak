@@ -105,6 +105,7 @@ void AAlien_OutbreakCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAlien_OutbreakCharacter::MoveRight);
+	PlayerInputComponent->BindAction("AirDash", IE_Pressed, this, &AAlien_OutbreakCharacter::AirDash);
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AAlien_OutbreakCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AAlien_OutbreakCharacter::TouchStopped);
@@ -114,6 +115,10 @@ void AAlien_OutbreakCharacter::MoveRight(float Value)
 {
 	// add movement in that direction
 	AddMovementInput(FVector(0.f,-1.f,0.f), Value);
+	if (Value < 0)
+		facingRight = false;
+	else if (Value > 0)
+		facingRight = true;
 }
 
 void AAlien_OutbreakCharacter::TouchStarted(const ETouchIndex::Type FingerIndex, const FVector Location)
@@ -138,7 +143,7 @@ void AAlien_OutbreakCharacter::onRockHit(float minsHP, float rockY) {
 		// Player Death
 	}
 	
-	// Playe hurt sound
+	// Player hurt sound
 	playHurtSound(FMath::RandRange(1, 5));
 
 	// Set up knockback
@@ -161,4 +166,255 @@ void AAlien_OutbreakCharacter::playHurtSound(int num) {
 	case 5: UGameplayStatics::PlaySound2D(this, HurtSound5); break;
 	default: UGameplayStatics::PlaySound2D(this, HurtSound1); break;
 	}
+}
+
+void AAlien_OutbreakCharacter::AirDash()
+{
+	if (facingRight) {
+		LaunchCharacter(FVector(0.f, -2000.f, 0.f), true, true);
+		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, 2.0f, false);
+	}
+	else {
+		LaunchCharacter(FVector(0.f, 2000.f, 0.f), true, true);
+		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, 2.0f, false);
+	}
+}
+
+void AAlien_OutbreakCharacter::AirDashStop()
+{
+
+
+}
+
+/// 
+/// State Machine
+/// 
+void AAlien_OutbreakCharacter::FSMUpdate()
+{
+	// List all expected states and call relevant state functions
+	if (State == GameStates::IDLE)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Idle_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Idle_Update();
+		}
+	}
+
+	if (State == GameStates::MOVE)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Move_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Move_Update();
+		}
+	}
+
+	if (State == GameStates::JUMP)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Jump_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Jump_Update();
+		}
+	}
+
+	if (State == GameStates::DASH)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Dash_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Dash_Update();
+		}
+	}
+
+	if (State == GameStates::ATTACK)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Attack_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Attack_Update();
+		}
+	}
+
+	if (State == GameStates::HURT)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Hurt_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Hurt_Update();
+		}
+	}
+
+	if (State == GameStates::DEATH)
+	{
+		if (Event == GameEvents::ON_ENTER) {
+			Death_Enter();
+		}
+		if (Event == GameEvents::ON_UPDATE) {
+			Death_Update();
+		}
+	}
+
+	// Append any GameStates you add to this example..
+}
+
+void AAlien_OutbreakCharacter::SetFSMState(GameStates newState)
+{
+	// Append any GameStates you add to this example to this switch statement...
+	switch (State)
+	{
+	case GameStates::IDLE:
+		Idle_Exit();
+		break;
+	case GameStates::MOVE:
+		Move_Exit();
+		break;
+	case GameStates::JUMP:
+		Jump_Exit();
+		break;
+	case GameStates::DASH:
+		Dash_Exit();
+		break;
+	case GameStates::ATTACK:
+		Attack_Exit();
+		break;
+	case GameStates::HURT:
+		Hurt_Exit();
+		break;
+	case GameStates::DEATH:
+		Death_Exit();
+		break;
+	default:
+		UE_LOG(LogTemp, Error, TEXT("Unexpected state has not been implemented!"), newState);
+		return;
+	}
+
+	// Set new GameStates state and begin OnEnter of that state
+	State = newState;
+	Event = GameEvents::ON_ENTER;
+}
+
+void AAlien_OutbreakCharacter::Idle_Enter()
+{
+	// Change to GameEvents to Update when called
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Idle_Update()
+{
+	// Called once a frame when in the IDLE GameStates state
+	// Implement functionality for Idle...
+}
+
+void AAlien_OutbreakCharacter::Idle_Exit()
+{
+	// Implement any functionality for leaving the Idle state
+}
+
+void AAlien_OutbreakCharacter::Move_Enter()
+{
+	// Change to GameEvents to Update when called
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Move_Update()
+{
+
+}
+
+void AAlien_OutbreakCharacter::Move_Exit()
+{
+
+}
+
+void AAlien_OutbreakCharacter::Jump_Enter()
+{
+
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Jump_Update()
+{
+	// Called once a frame when in the IDLE GameStates state
+	// Implement functionality for Idle...
+}
+
+void AAlien_OutbreakCharacter::Jump_Exit()
+{
+	// Implement any functionality for leaving the Idle state
+}
+
+void AAlien_OutbreakCharacter::Dash_Enter()
+{
+	// Change to GameEvents to Update when called
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Dash_Update()
+{
+	// Called once a frame when in the RETREAT GameStates state
+	// Implement functionality for Retreat...
+}
+
+void AAlien_OutbreakCharacter::Dash_Exit()
+{
+	// Implement any functionality for leaving the Retreat state
+}
+
+void AAlien_OutbreakCharacter::Attack_Enter()
+{
+	// Change to GameEvents to Update when called
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Attack_Update()
+{
+	// Called once a frame when in the RETREAT GameStates state
+	// Implement functionality for Retreat...
+}
+
+void AAlien_OutbreakCharacter::Attack_Exit()
+{
+	// Implement any functionality for leaving the Retreat state
+}
+
+void AAlien_OutbreakCharacter::Hurt_Enter()
+{
+	// Change to GameEvents to Update when called
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Hurt_Update()
+{
+	// Called once a frame when in the RETREAT GameStates state
+	// Implement functionality for Retreat...
+}
+
+void AAlien_OutbreakCharacter::Hurt_Exit()
+{
+	// Implement any functionality for leaving the Retreat state
+}
+
+void AAlien_OutbreakCharacter::Death_Enter()
+{
+	// Change to GameEvents to Update when called
+	Event = GameEvents::ON_UPDATE;
+}
+
+void AAlien_OutbreakCharacter::Death_Update()
+{
+	// Called once a frame when in the RETREAT GameStates state
+	// Implement functionality for Retreat...
+}
+
+void AAlien_OutbreakCharacter::Death_Exit()
+{
+	// Implement any functionality for leaving the Retreat state
 }
