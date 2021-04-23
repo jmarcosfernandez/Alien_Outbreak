@@ -5,6 +5,8 @@
 
 #include "Components/StaticMeshComponent.h"
 
+#include "BossHPWidget.h"
+
 #include "RockProjectileActor.h"
 
 
@@ -37,7 +39,6 @@ void AAlien_BreakOutBossOne::SetupPlayerInputComponent(UInputComponent* PlayerIn
 void AAlien_BreakOutBossOne::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame

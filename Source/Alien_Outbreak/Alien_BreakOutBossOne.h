@@ -28,6 +28,11 @@ protected:
 	TArray<FVector> teleportLocation;
 
 public:
+	UPROPERTY(BlueprintReadOnly)
+		float HP = 1.0f;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<class UBossHPWidget> WidgetClass;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
