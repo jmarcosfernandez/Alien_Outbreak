@@ -144,7 +144,7 @@ void ARockProjectileActor::rotating(float DeltaTime) {
 void ARockProjectileActor::readyFire() {
 	// Set to align with player
 	readyLoc = GetActorLocation();
-	readyLoc.X = -60.0;
+	readyLoc.X = 1207.272461;
 	readyDirection = readyLoc - GetActorLocation();
 	readyToFire = true;
 }

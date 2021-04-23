@@ -28,6 +28,7 @@ AAlien_BreakOutBossOne::AAlien_BreakOutBossOne()
 	attackCoolDown = 1.5;
 	teleportCoolDown = 15;
 
+	
 	teleportLocation.Add(FVector(1207.272461, -1060.0, 390.0));
 	teleportLocation.Add(FVector(1207.272461, -1340.0, 490.0));
 	teleportLocation.Add(FVector(1207.272461, 490.0, 300.0));
