@@ -29,10 +29,10 @@ void APAttackHitbox::BeginPlay()
 {
 	Super::BeginPlay();
 
+	SetActorScale3D(GetActorScale3D() * 0.5f);
+
 	SphereMesh->OnComponentBeginOverlap.AddDynamic(this, &APAttackHitbox::OnOverlapBegin);
 	forward = GetActorForwardVector();
-	SphereMesh->OnComponentBeginOverlap.AddDynamic(this, &APAttackHitbox::OnOverlapBegin);
-
 }
 
 // Called every frame

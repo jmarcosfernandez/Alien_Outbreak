@@ -95,6 +95,9 @@ void ARockProjectileActor::Tick(float DeltaTime)
 
 	if (readyToFire) {
 		timeTick++;
+		//FVector distPerTick = readyDirection;
+		//distPerTick.X /= 
+		if(!firing)this->SetActorLocation(GetActorLocation() + readyDirection / (waitTime * 60));
 		if (timeTick >= waitTime * 60 && !firing) {
 			FVector targetLocation = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation();
 			FVector curLocation = GetActorLocation();
@@ -140,10 +143,9 @@ void ARockProjectileActor::rotating(float DeltaTime) {
 
 void ARockProjectileActor::readyFire() {
 	// Set to align with player
-	FVector currentLoc = GetActorLocation();
-	currentLoc.X = 1207.272461;
-	this->SetActorLocation(currentLoc);
-
+	readyLoc = GetActorLocation();
+	readyLoc.X = 1207.272461;
+	readyDirection = readyLoc - GetActorLocation();
 	readyToFire = true;
 }
 

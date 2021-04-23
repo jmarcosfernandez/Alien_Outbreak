@@ -28,7 +28,7 @@ private:
 	int attackCoolDown;
 	int teleportCoolDown;
 
-	// FVector teleportLocation;
+	TArray<FVector> teleportLocation;
 
 public:
 	UPROPERTY(BlueprintReadOnly)

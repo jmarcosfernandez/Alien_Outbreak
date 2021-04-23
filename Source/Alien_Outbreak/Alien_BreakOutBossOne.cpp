@@ -29,9 +29,9 @@ AAlien_BreakOutBossOne::AAlien_BreakOutBossOne()
 	teleportCoolDown = 15;
 
 	
-	//teleportLocation.Add(FVector(1207.272461, -1060.0, 390.0));
-	//teleportLocation.Add(FVector(1207.272461, -1340.0, 490.0));
-	//teleportLocation.Add(FVector(1207.272461, 490.0, 300.0));
+	teleportLocation.Add(FVector(1207.272461, -1060.0, 390.0));
+	teleportLocation.Add(FVector(1207.272461, -1340.0, 490.0));
+	teleportLocation.Add(FVector(1207.272461, 490.0, 300.0));
 }
 
 void AAlien_BreakOutBossOne::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -217,7 +217,7 @@ void AAlien_BreakOutBossOne::Teleport_Enter()
 {
 	Event = GameEvents::ON_UPDATE;
 	int rand = FMath::RandRange(0, 2);
-//	SetActorLocation(teleportLocation[rand]);
+	SetActorLocation(teleportLocation[rand]);
 }
 
 void AAlien_BreakOutBossOne::Teleport_Update()
