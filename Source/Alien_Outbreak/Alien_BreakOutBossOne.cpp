@@ -9,9 +9,7 @@
 
 #include "RockProjectileActor.h"
 
-#include "Alien_OutbreakCharacter.h"
 
-#include "PAttackHitbox.h"
 
 
 int rockLeft = 0;
@@ -25,13 +23,11 @@ AAlien_BreakOutBossOne::AAlien_BreakOutBossOne()
 
 	timeTick = 0;
 	fps = 60;
-	summonCoolDown = 5;
-	attackCoolDown = 1.5;
+	summonCoolDown = 10;
+	attackCoolDown = 3;
 	teleportCoolDown = 15;
 
-	teleportLocation.Add(FVector(1207.272461, -1060.0, 390.0));
-	teleportLocation.Add(FVector(1207.272461, -1340.0, 490.0));
-	teleportLocation.Add(FVector(1207.272461, 490.0, 300.0));
+	teleportLocation.Add(FVector(0, 0, 0));
 }
 
 void AAlien_BreakOutBossOne::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -53,7 +49,7 @@ void AAlien_BreakOutBossOne::BeginPlay()
 void AAlien_BreakOutBossOne::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
+
 	if (((timeTick % (summonCoolDown * fps)) == 0)) {
 		SetFSMState(GameStates::SUMMON);
 	}
@@ -174,17 +170,17 @@ void AAlien_BreakOutBossOne::Summon_Enter()
 
 	rocks[0]->axis = FVector(0, 0.5, 0.5);
 	rocks[0]->angleAxis = 180.f;
-	rocks[0]->rotateSpeed = 80.f;
+	rocks[0]->rotateSpeed = 140.f;
 	rocks[0]->dimention = FVector(330, 0, 0);
 
 	rocks[1]->axis = FVector(0, -0.5, 0.5);
 	rocks[1]->angleAxis = 90.f;
-	rocks[1]->rotateSpeed = 80.f;
+	rocks[1]->rotateSpeed = 140.f;
 	rocks[1]->dimention = FVector(240, 0, 0);
 
 	rocks[2]->axis = FVector(0, 0, 1);
 	rocks[2]->angleAxis = -90.f;
-	rocks[2]->rotateSpeed = 80.f;
+	rocks[2]->rotateSpeed = 140.f;
 	rocks[2]->dimention = FVector(180, 0, 0);
 }
 
@@ -217,8 +213,6 @@ void AAlien_BreakOutBossOne::Attack_Exit()
 void AAlien_BreakOutBossOne::Teleport_Enter()
 {
 	Event = GameEvents::ON_UPDATE;
-	int rand = FMath::RandRange(0, 2);
-	SetActorLocation(teleportLocation[rand]);
 }
 
 void AAlien_BreakOutBossOne::Teleport_Update()
@@ -227,13 +221,5 @@ void AAlien_BreakOutBossOne::Teleport_Update()
 
 void AAlien_BreakOutBossOne::Teleport_Exit()
 {
-	
-}
-
-void AAlien_BreakOutBossOne::hitByPlayer(float minsHP) {
-	this->HP -= minsHP;
-	if (HP <= 0.f) {
-		// Death
-	}
 }
 
