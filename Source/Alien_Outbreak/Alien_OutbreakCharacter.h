@@ -42,6 +42,9 @@ protected:
 
 	UFUNCTION()
 	void AirDashStop();
+
+	UFUNCTION()
+	void PAttackStop();
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
@@ -63,6 +66,8 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 	FTimerHandle AirDashTimerHandle;
+
+	FTimerHandle PAttackTimerHandle;
 
 public:
 		UPROPERTY(BlueprintReadOnly)

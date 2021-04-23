@@ -1,7 +1,7 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "Alien_OutbreakCharacter.h"
-#include "StateMachine.h"
+#include "PAttackHitbox.h"
 
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -189,6 +189,25 @@ void AAlien_OutbreakCharacter::AirDashStop()
 }
 
 void AAlien_OutbreakCharacter::PAttack()
+{
+	//Creates the sphere infront of the player. 
+	//can use facing right to make it face the right way.
+	//When it collides with the boss, it'll do damage.
+	//I have to make a timer, that starts when created and deletes after it is gone.
+	FVector loc = GetActorLocation();
+	if (facingRight)
+		loc.Y += -50.f;
+	else
+		loc.Y += 50.f;
+
+
+	APAttackHitbox* a = GetWorld()->SpawnActor<APAttackHitbox>(loc, GetActorRotation());
+	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 2.0f, false);
+
+
+}
+
+void AAlien_OutbreakCharacter::PAttackStop()
 {
 
 }
