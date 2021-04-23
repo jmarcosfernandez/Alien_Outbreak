@@ -3,6 +3,8 @@
 
 #include "PAttackHitbox.h"
 
+#include "Alien_BreakOutBossOne.h"
+
 // Sets default values
 APAttackHitbox::APAttackHitbox()
 {
@@ -12,8 +14,9 @@ APAttackHitbox::APAttackHitbox()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SphereMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	SphereMesh->SetStaticMesh(SphereMeshAsset.Object);
+	SphereMesh->SetCollisionProfileName(TEXT("OverlapAll"));
 
-	Speed = 0.f;
+	Speed = 10.f;
 
 	RootComponent = SphereMesh;
 }
@@ -22,15 +25,29 @@ APAttackHitbox::APAttackHitbox()
 void APAttackHitbox::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SetActorScale3D(GetActorScale3D() * 0.5f);
+	forward = GetActorForwardVector();
+	SphereMesh->OnComponentBeginOverlap.AddDynamic(this, &APAttackHitbox::OnOverlapBegin);
 }
 
 // Called every frame
 void APAttackHitbox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FVector forward = GetActorForwardVector();
-	SetActorLocation(GetActorLocation() + forward * Speed);
+	
+	//UE_LOG(LogTemp, Warning, TEXT("forward: %f %f %f!"), forward.X, forward.Y, forward.Z);
+	if(forward.Y > 0)
+		SetActorLocation(GetActorLocation() + FVector(0.0, 1.0, 0.0) * Speed);
+	else
+		SetActorLocation(GetActorLocation() + FVector(0.0, -1.0, 0.0) * Speed);
+}
 
+void APAttackHitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass())) {
+		UE_LOG(LogTemp, Warning, TEXT("Player hit boss!"));
+
+		((AAlien_BreakOutBossOne *)OtherActor)->hitByPlayer(0.03f);
+		this->Destroy();
+	}
 }
 

@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Alien_BreakOutBossOne.h"
 #include "Alien_OutbreakCharacter.h"
+#include "PAttackHitbox.h"
 
 
 // Sets default values
@@ -32,7 +33,7 @@ ARockProjectileActor::ARockProjectileActor()
 
 	RootComponent = Mesh;
 
-	fireSpeed = 12.f;
+	fireSpeed = 25.f;
 	dimention = FVector(300, 0, 0);
 	axis = FVector(0, 0, 1);
 	rotateSpeed = 90.f;
@@ -53,13 +54,19 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 
 		float rockY = this->GetActorLocation().Y;
 		// Reduce Player HP
-		((AAlien_OutbreakCharacter *)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.05f, rockY);
-
-		this->Destroy();
+		if (!((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->Avoiding) {
+			((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.1f, rockY);
+			this->Destroy();
+		}
 	}
 	else if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
 		// Ignore collision with rock or boss
+	}
+	else if (OtherActor->IsA(APAttackHitbox::StaticClass())) {
+		UE_LOG(LogTemp, Warning, TEXT("HIT Player Bullet!"));
+		GetWorld()->DestroyActor(OtherActor);
+		this->Destroy();
 	}
 	else {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Wall!"));
@@ -149,6 +156,11 @@ void ARockProjectileActor::rotating(float DeltaTime) {
 }
 
 void ARockProjectileActor::readyFire() {
+	// Set to align with player
+	FVector currentLoc = GetActorLocation();
+	currentLoc.X = 1207.272461;
+	this->SetActorLocation(currentLoc);
+
 	readyToFire = true;
 }
 

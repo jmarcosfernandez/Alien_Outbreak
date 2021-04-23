@@ -69,6 +69,12 @@ AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
 	static ConstructorHelpers::FObjectFinder<USoundWave> Hurt5(TEXT("SoundWave'/Game/Sounds/Hurt5'"));
 	HurtSound5 = Hurt5.Object;
 	
+	AttackCD = 0.5;
+	Attacking = false;
+	DashCD = 2.f;
+	Dashing = false;
+	AvoidTime = 0.7f;
+	Avoiding = false;
 }
 
 void AAlien_OutbreakCharacter::BeginPlay()
@@ -93,7 +99,6 @@ void AAlien_OutbreakCharacter::Tick(float DeltaTime)
 		if (knockBackCount <= 0)
 			knockingBack = false;
 	}
-	//HP -= 0.0001f;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -172,20 +177,30 @@ void AAlien_OutbreakCharacter::playHurtSound(int num) {
 
 void AAlien_OutbreakCharacter::AirDash()
 {
+	if (Dashing)
+		return;
+	Dashing = true;
+	Avoiding = true;
 	if (facingRight) {
 		LaunchCharacter(FVector(0.f, -2000.f, 0.f), true, true);
-		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, 2.0f, false);
+		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, DashCD, false);
+		GetWorld()->GetTimerManager().SetTimer(AvoidTimerHandle, this, &AAlien_OutbreakCharacter::AvoidStop, AvoidTime, false);
 	}
 	else {
 		LaunchCharacter(FVector(0.f, 2000.f, 0.f), true, true);
-		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, 2.0f, false);
+		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, DashCD, false);
+		GetWorld()->GetTimerManager().SetTimer(AvoidTimerHandle, this, &AAlien_OutbreakCharacter::AvoidStop, AvoidTime, false);
 	}
+}
+
+void AAlien_OutbreakCharacter::AvoidStop()
+{
+	Avoiding = false;
 }
 
 void AAlien_OutbreakCharacter::AirDashStop()
 {
-
-
+	Dashing = false;
 }
 
 void AAlien_OutbreakCharacter::PAttack()
@@ -194,6 +209,9 @@ void AAlien_OutbreakCharacter::PAttack()
 	//can use facing right to make it face the right way.
 	//When it collides with the boss, it'll do damage.
 	//I have to make a timer, that starts when created and deletes after it is gone.
+	if (Attacking)
+		return;
+	Attacking = true;
 	FVector loc = GetActorLocation();
 	if (facingRight)
 		loc.Y += -50.f;
@@ -202,14 +220,14 @@ void AAlien_OutbreakCharacter::PAttack()
 
 
 	APAttackHitbox* a = GetWorld()->SpawnActor<APAttackHitbox>(loc, GetActorRotation());
-	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 2.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, AttackCD, false);
 
 
 }
 
 void AAlien_OutbreakCharacter::PAttackStop()
 {
-
+	Attacking = false;
 }
 
 /// 
