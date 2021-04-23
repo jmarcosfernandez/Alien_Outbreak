@@ -47,38 +47,37 @@ ARockProjectileActor::ARockProjectileActor()
 
 
 
-void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
-{
+void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if (OtherActor->IsA(AAlien_OutbreakCharacter::StaticClass())) {
 		UE_LOG(LogTemp, Warning, TEXT("HIT Player!"));
 
 		float rockY = this->GetActorLocation().Y;
 		// Reduce Player HP
-		((AAlien_OutbreakCharacter *)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.05f, rockY);
+		((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.05f, rockY);
 
 		this->Destroy();
 		if (!((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->Avoiding) {
 			((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.1f, rockY);
 			this->Destroy();
-	}
-	else if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
-		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
-		// Ignore collision with rock or boss
-	}
-	else if (OtherActor->IsA(APAttackHitbox::StaticClass())) {
+		}
+		else if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
+			UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
+			// Ignore collision with rock or boss
+		}
+		else if (OtherActor->IsA(APAttackHitbox::StaticClass())) {
 			UE_LOG(LogTemp, Warning, TEXT("HIT Player Bullet!"));
 			GetWorld()->DestroyActor(OtherActor);
 			this->Destroy();
 		}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("HIT Wall!"));
-		this->Destroy();
-	}
-	
-	//GC
-	//GetWorld()->ForceGarbageCollection(true);
-}
+		else {
+			UE_LOG(LogTemp, Warning, TEXT("HIT Wall!"));
+			this->Destroy();
+		}
 
+		//GC
+		//GetWorld()->ForceGarbageCollection(true);
+	}
+}
 
 // Called when the game starts or when spawned
 void ARockProjectileActor::BeginPlay()

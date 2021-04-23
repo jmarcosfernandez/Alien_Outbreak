@@ -212,7 +212,6 @@ void AAlien_OutbreakCharacter::PAttack()
 	//can use facing right to make it face the right way.
 	//When it collides with the boss, it'll do damage.
 	//I have to make a timer, that starts when created and deletes after it is gone.
-	FVector loc = GetActorLocation();
 	if (Attacking)
 		return;
 	Attacking = true;

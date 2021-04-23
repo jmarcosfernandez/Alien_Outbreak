@@ -74,9 +74,6 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
-	FTimerHandle AirDashTimerHandle;
-
-	FTimerHandle PAttackTimerHandle;
 
 public:
 		UPROPERTY(BlueprintReadOnly)

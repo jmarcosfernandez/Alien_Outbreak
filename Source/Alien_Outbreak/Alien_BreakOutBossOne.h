@@ -25,6 +25,10 @@ private:
 	int timeTick;
 	int fps;
 	int summonCoolDown;
+	int attackCoolDown;
+	int teleportCoolDown;
+
+	// FVector teleportLocation;
 
 public:
 	UPROPERTY(BlueprintReadOnly)

@@ -39,7 +39,7 @@ void APAttackHitbox::BeginPlay()
 void APAttackHitbox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FVector forward = GetActorForwardVector();
+	forward = GetActorForwardVector();
 	SetActorLocation(GetActorLocation() + forward * Speed);
 	
 	//UE_LOG(LogTemp, Warning, TEXT("forward: %f %f %f!"), forward.X, forward.Y, forward.Z);
