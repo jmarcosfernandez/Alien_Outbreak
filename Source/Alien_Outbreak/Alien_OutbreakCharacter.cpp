@@ -196,13 +196,13 @@ void AAlien_OutbreakCharacter::PAttack()
 	//I have to make a timer, that starts when created and deletes after it is gone.
 	FVector loc = GetActorLocation();
 	if (facingRight)
-		loc.Y += -70.f;
+		loc.Y += -50.f;
 	else
-		loc.Y += 70.f;
+		loc.Y += 50.f;
 
 
 	APAttackHitbox* a = GetWorld()->SpawnActor<APAttackHitbox>(loc, GetActorRotation());
-	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 1.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 2.0f, false);
 
 
 }
