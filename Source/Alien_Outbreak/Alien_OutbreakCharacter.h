@@ -36,16 +36,9 @@ protected:
 	/** Handle touch stop event. */
 	void TouchStopped(const ETouchIndex::Type FingerIndex, const FVector Location);
 
-	void AirDash();
-
-	UFUNCTION()
-	void AirDashStop();
-
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
-
-	bool facingRight = true;
 
 public:
 	AAlien_OutbreakCharacter();
@@ -59,10 +52,8 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	//virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
-	FTimerHandle AirDashTimerHandle;
 
 public:
 		UPROPERTY(BlueprintReadOnly)
