@@ -106,6 +106,8 @@ void AAlien_OutbreakCharacter::SetupPlayerInputComponent(class UInputComponent* 
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AAlien_OutbreakCharacter::MoveRight);
 	PlayerInputComponent->BindAction("AirDash", IE_Pressed, this, &AAlien_OutbreakCharacter::AirDash);
+	PlayerInputComponent->BindAction("PAttack", IE_Pressed, this, &AAlien_OutbreakCharacter::PAttack);
+
 
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AAlien_OutbreakCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AAlien_OutbreakCharacter::TouchStopped);
@@ -183,6 +185,11 @@ void AAlien_OutbreakCharacter::AirDash()
 void AAlien_OutbreakCharacter::AirDashStop()
 {
 
+
+}
+
+void AAlien_OutbreakCharacter::PAttack()
+{
 
 }
 

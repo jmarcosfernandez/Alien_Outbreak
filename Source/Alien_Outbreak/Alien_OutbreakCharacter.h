@@ -38,6 +38,8 @@ protected:
 
 	void AirDash();
 
+	void PAttack();
+
 	UFUNCTION()
 	void AirDashStop();
 	// APawn interface
