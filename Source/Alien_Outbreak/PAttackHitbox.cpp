@@ -2,9 +2,12 @@
 
 
 #include "PAttackHitbox.h"
+<<<<<<< HEAD
 #include "Alien_BreakOutBossOne.h"
 #include "Alien_OutbreakCharacter.h"
 #include "Kismet/GameplayStatics.h"
+=======
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 
 // Sets default values
 APAttackHitbox::APAttackHitbox()
@@ -15,9 +18,11 @@ APAttackHitbox::APAttackHitbox()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SphereMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	SphereMesh->SetStaticMesh(SphereMeshAsset.Object);
-	SphereMesh->SetCollisionProfileName(TEXT("OverlapAll"));
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 	Speed = 0.f;
 
 	RootComponent = SphereMesh;
@@ -27,8 +32,12 @@ APAttackHitbox::APAttackHitbox()
 void APAttackHitbox::BeginPlay()
 {
 	Super::BeginPlay();
+<<<<<<< HEAD
 	SphereMesh->OnComponentBeginOverlap.AddDynamic(this, &APAttackHitbox::OnOverlapBegin);
 
+=======
+	
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 }
 
 // Called every frame
@@ -37,6 +46,7 @@ void APAttackHitbox::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FVector forward = GetActorForwardVector();
 	SetActorLocation(GetActorLocation() + forward * Speed);
+<<<<<<< HEAD
 
 }
 
@@ -52,6 +62,9 @@ void APAttackHitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 	
 	//GC
 	//GetWorld()->ForceGarbageCollection(true);
+=======
+
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 }
 
 void APAttackHitbox::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {

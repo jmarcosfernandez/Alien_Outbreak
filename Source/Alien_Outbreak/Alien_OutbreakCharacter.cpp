@@ -202,7 +202,11 @@ void AAlien_OutbreakCharacter::PAttack()
 
 
 	APAttackHitbox* a = GetWorld()->SpawnActor<APAttackHitbox>(loc, GetActorRotation());
+<<<<<<< HEAD
 	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 1.0f, false);
+=======
+	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 2.0f, false);
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 
 
 }
