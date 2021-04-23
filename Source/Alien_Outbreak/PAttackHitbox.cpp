@@ -2,6 +2,9 @@
 
 
 #include "PAttackHitbox.h"
+#include "Alien_BreakOutBossOne.h"
+#include "Alien_OutbreakCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APAttackHitbox::APAttackHitbox()
@@ -12,6 +15,8 @@ APAttackHitbox::APAttackHitbox()
 
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>SphereMeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	SphereMesh->SetStaticMesh(SphereMeshAsset.Object);
+	SphereMesh->SetCollisionProfileName(TEXT("OverlapAll"));
+
 
 	Speed = 0.f;
 
@@ -22,7 +27,8 @@ APAttackHitbox::APAttackHitbox()
 void APAttackHitbox::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	SphereMesh->OnComponentBeginOverlap.AddDynamic(this, &APAttackHitbox::OnOverlapBegin);
+
 }
 
 // Called every frame
@@ -34,3 +40,27 @@ void APAttackHitbox::Tick(float DeltaTime)
 
 }
 
+
+void APAttackHitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) ) {
+		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
+		// Ignore collision with rock or boss
+		((AAlien_BreakOutBossOne*)AController()->GetPawn())->onAttackHit(.05f);
+		this->Destroy();
+	}
+	
+	//GC
+	//GetWorld()->ForceGarbageCollection(true);
+}
+
+void APAttackHitbox::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
+	if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) ) {
+		UE_LOG(LogTemp, Warning, TEXT("HIT Rock or Boss!"));
+		// Ignore collision with rock or boss
+		this->Destroy();
+	}
+	
+	//GC
+	//GetWorld()->ForceGarbageCollection(true);
+}
