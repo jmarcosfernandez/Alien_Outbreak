@@ -39,6 +39,10 @@ void AAlien_BreakOutBossOne::SetupPlayerInputComponent(UInputComponent* PlayerIn
 void AAlien_BreakOutBossOne::BeginPlay()
 {
 	Super::BeginPlay();
+
+	auto Widget = CreateWidget<UBossHPWidget>(GetWorld(), WidgetClass);
+	Widget->Boss = this;
+	Widget->AddToViewport();
 }
 
 // Called every frame
