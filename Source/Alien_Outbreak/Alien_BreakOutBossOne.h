@@ -27,7 +27,11 @@ protected:
 	int teleportCoolDown;
 	TArray<FVector> teleportLocation;
 
+
 public:
+
+	void onAttackHit(float minsHP);
+	void BossHP_Setter(float new_HP);
 	UPROPERTY(BlueprintReadOnly)
 		float HP = 1.0f;
 	UPROPERTY(EditAnywhere)
