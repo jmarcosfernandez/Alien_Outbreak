@@ -52,10 +52,6 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 		UE_LOG(LogTemp, Warning, TEXT("HIT Player!"));
 
 		float rockY = this->GetActorLocation().Y;
-		// Reduce Player HP
-		((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.05f, rockY);
-
-		this->Destroy();
 		if (!((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->Avoiding) {
 			((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.1f, rockY);
 			this->Destroy();
@@ -67,10 +63,6 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 		else if (OtherActor->IsA(APAttackHitbox::StaticClass())) {
 			UE_LOG(LogTemp, Warning, TEXT("HIT Player Bullet!"));
 			GetWorld()->DestroyActor(OtherActor);
-			this->Destroy();
-		}
-		else {
-			UE_LOG(LogTemp, Warning, TEXT("HIT Wall!"));
 			this->Destroy();
 		}
 

@@ -19,7 +19,7 @@ APAttackHitbox::APAttackHitbox()
 	SphereMesh->SetCollisionProfileName(TEXT("OverlapAll"));
 
 
-	Speed = 10.f;
+	Speed = 20.0;
 
 	RootComponent = SphereMesh;
 }
@@ -39,10 +39,7 @@ void APAttackHitbox::BeginPlay()
 void APAttackHitbox::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	forward = GetActorForwardVector();
-	SetActorLocation(GetActorLocation() + forward * Speed);
 	
-	//UE_LOG(LogTemp, Warning, TEXT("forward: %f %f %f!"), forward.X, forward.Y, forward.Z);
 	if (forward.Y > 0)
 		SetActorLocation(GetActorLocation() + FVector(0.0, 1.0, 0.0) * Speed);
 	else

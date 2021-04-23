@@ -184,16 +184,12 @@ void AAlien_OutbreakCharacter::AirDash()
 	Avoiding = true;
 	if (facingRight) {
 		LaunchCharacter(FVector(0.f, -2000.f, 0.f), true, true);
-		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, 2.0f, false);
-		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, DashCD, false);
-		GetWorld()->GetTimerManager().SetTimer(AvoidTimerHandle, this, &AAlien_OutbreakCharacter::AvoidStop, AvoidTime, false);
 	}
 	else {
 		LaunchCharacter(FVector(0.f, 2000.f, 0.f), true, true);
-		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, 2.0f, false);
-		GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, DashCD, false);
-		GetWorld()->GetTimerManager().SetTimer(AvoidTimerHandle, this, &AAlien_OutbreakCharacter::AvoidStop, AvoidTime, false);
 	}
+	GetWorld()->GetTimerManager().SetTimer(AirDashTimerHandle, this, &AAlien_OutbreakCharacter::AirDashStop, DashCD, false);
+	GetWorld()->GetTimerManager().SetTimer(AvoidTimerHandle, this, &AAlien_OutbreakCharacter::AvoidStop, AvoidTime, false);
 }
 void AAlien_OutbreakCharacter::AvoidStop()
 {
@@ -220,7 +216,6 @@ void AAlien_OutbreakCharacter::PAttack()
 		loc.Y += -70.f;
 
 	APAttackHitbox* a = GetWorld()->SpawnActor<APAttackHitbox>(loc, GetActorRotation());
-	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 2.0f, false);
 	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, AttackCD, false);
 
 
