@@ -44,10 +44,19 @@ protected:
 	void AirDashStop();
 
 	UFUNCTION()
-	void PAttackStop();
+		void PAttackStop();
+
+	UFUNCTION()
+		void AvoidStop();
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End of APawn interface
+
+	FTimerHandle AirDashTimerHandle;
+
+	FTimerHandle AvoidTimerHandle;
+
+	FTimerHandle PAttackTimerHandle;
 
 	bool facingRight = true;
 public:
@@ -74,6 +83,7 @@ public:
 			float HP = 1.0f;
 		UPROPERTY(EditAnywhere)
 			TSubclassOf<class UPlayerHPWidget> WidgetClass;
+		bool Avoiding;
 
 private:
 	USoundWave* HurtSound1;
@@ -89,6 +99,12 @@ private:
 	float knockBackSpeed;
 	int fps;
 	int knockBackCount;
+
+	float AttackCD;
+	bool Attacking;
+	float DashCD;
+	bool Dashing;
+	float AvoidTime;
 
 	enum GameStates { IDLE, MOVE, JUMP, DASH, ATTACK, HURT, DEATH };
 	GameStates State = GameStates::IDLE;

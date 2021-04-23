@@ -20,18 +20,20 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+private:
 	int timeTick;
 	int fps;
 	int summonCoolDown;
-	int attackCoolDown;
-	int teleportCoolDown;
-	TArray<FVector> teleportLocation;
 
 public:
 	UPROPERTY(BlueprintReadOnly)
 		float HP = 1.0f;
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<class UBossHPWidget> WidgetClass;
+
+	void hitByPlayer(float minsHP);
+
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

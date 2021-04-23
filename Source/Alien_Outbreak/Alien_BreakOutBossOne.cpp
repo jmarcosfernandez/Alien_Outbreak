@@ -25,9 +25,14 @@ AAlien_BreakOutBossOne::AAlien_BreakOutBossOne()
 	fps = 60;
 	summonCoolDown = 10;
 	attackCoolDown = 3;
+	summonCoolDown = 5;
+	attackCoolDown = 1.5;
 	teleportCoolDown = 15;
 
 	teleportLocation.Add(FVector(0, 0, 0));
+	teleportLocation.Add(FVector(1207.272461, -1060.0, 390.0));
+	teleportLocation.Add(FVector(1207.272461, -1340.0, 490.0));
+	teleportLocation.Add(FVector(1207.272461, 490.0, 300.0));
 }
 
 void AAlien_BreakOutBossOne::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -209,6 +214,8 @@ void AAlien_BreakOutBossOne::Attack_Exit()
 void AAlien_BreakOutBossOne::Teleport_Enter()
 {
 	Event = GameEvents::ON_UPDATE;
+	int rand = FMath::RandRange(0, 2);
+	SetActorLocation(teleportLocation[rand]);
 }
 
 void AAlien_BreakOutBossOne::Teleport_Update()
@@ -219,3 +226,9 @@ void AAlien_BreakOutBossOne::Teleport_Exit()
 {
 }
 
+void AAlien_BreakOutBossOne::hitByPlayer(float minsHP) {
+	this->HP -= minsHP;
+	if (HP <= 0.f) {
+		// Death
+	}
+}
