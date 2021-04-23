@@ -68,16 +68,6 @@ void AAlien_BreakOutBossOne::Tick(float DeltaTime)
 	FSMUpdate();
 }
 
-void AAlien_BreakOutBossOne::BossHP_Setter(float new_HP) {
-	HP = new_HP;
-}
-
-void AAlien_BreakOutBossOne::onAttackHit(float minsHP) {
-	// Reduce boss hp on hit
-	this->HP -= minsHP;
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
-}
-
 void AAlien_BreakOutBossOne::FSMUpdate()
 {
 	// List all expected states and call relevant state functions
