@@ -3,9 +3,12 @@
 
 #include "PAttackHitbox.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "Alien_BreakOutBossOne.h"
 #include "Alien_OutbreakCharacter.h"
 #include "Kismet/GameplayStatics.h"
+=======
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 =======
 >>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 
@@ -20,7 +23,10 @@ APAttackHitbox::APAttackHitbox()
 	SphereMesh->SetStaticMesh(SphereMeshAsset.Object);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 =======
 >>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 	Speed = 0.f;
@@ -33,8 +39,12 @@ void APAttackHitbox::BeginPlay()
 {
 	Super::BeginPlay();
 <<<<<<< HEAD
+<<<<<<< HEAD
 	SphereMesh->OnComponentBeginOverlap.AddDynamic(this, &APAttackHitbox::OnOverlapBegin);
 
+=======
+	
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 =======
 	
 >>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
@@ -46,6 +56,7 @@ void APAttackHitbox::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	FVector forward = GetActorForwardVector();
 	SetActorLocation(GetActorLocation() + forward * Speed);
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 }
@@ -62,6 +73,9 @@ void APAttackHitbox::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 	
 	//GC
 	//GetWorld()->ForceGarbageCollection(true);
+=======
+
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 =======
 
 >>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)

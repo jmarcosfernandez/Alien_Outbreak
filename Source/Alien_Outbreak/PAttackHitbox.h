@@ -22,11 +22,14 @@ protected:
 	virtual void BeginPlay() override;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	UFUNCTION()
 		void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+=======
+>>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 =======
 >>>>>>> parent of 044c30f (Player attack and Boss Hp reduce)
 public:	
