@@ -202,7 +202,7 @@ void AAlien_OutbreakCharacter::PAttack()
 
 
 	APAttackHitbox* a = GetWorld()->SpawnActor<APAttackHitbox>(loc, GetActorRotation());
-	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 2.0f, false);
+	GetWorld()->GetTimerManager().SetTimer(PAttackTimerHandle, this, &AAlien_OutbreakCharacter::PAttackStop, 1.0f, false);
 
 
 }
