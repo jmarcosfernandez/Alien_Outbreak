@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 
-//#include "StateMachine.h"
+
+
 #include "Sound/SoundCue.h"
 #include "Components/AudioComponent.h"
 
@@ -13,6 +14,7 @@
 
 
 UCLASS(config = Game)
+
 class AAlien_OutbreakCharacter : public ACharacter
 {
 	GENERATED_BODY()
