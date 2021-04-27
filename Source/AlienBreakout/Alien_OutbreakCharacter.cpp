@@ -83,9 +83,9 @@ void AAlien_OutbreakCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto Widget = CreateWidget<UPlayerHPWidget>(UGameplayStatics::GetPlayerController(this, 0), WidgetClass);
-	Widget->Player = this;
-	Widget->AddToViewport();
+	//auto Widget = CreateWidget<UPlayerHPWidget>(UGameplayStatics::GetPlayerController(this, 0), WidgetClass);
+	//Widget->Player = this;
+	//Widget->AddToViewport();
 }
 
 void AAlien_OutbreakCharacter::Tick(float DeltaTime)
