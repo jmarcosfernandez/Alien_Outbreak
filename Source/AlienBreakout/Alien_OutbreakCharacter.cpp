@@ -157,6 +157,7 @@ void AAlien_OutbreakCharacter::onRockHit(float minsHP, float rockY) {
 	// Reduce player hp on hit
 	this->HP -= minsHP;
 	if (HP <= 0.f) {
+		UGameplayStatics::OpenLevel(GetWorld(), "End");
 		// Player Death
 	}
 
