@@ -39,11 +39,11 @@ AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Face in the direction we are moving..
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f); // ...at this rotation rate
-	GetCharacterMovement()->GravityScale = 2.f;
+	GetCharacterMovement()->GravityScale = 1.5f;
 	GetCharacterMovement()->AirControl = 0.80f;
-	GetCharacterMovement()->JumpZVelocity = 1600.f;
+	GetCharacterMovement()->JumpZVelocity = 1000.f * 1.4;
 	GetCharacterMovement()->GroundFriction = 3.f;
-	GetCharacterMovement()->MaxWalkSpeed = 600.f;
+	GetCharacterMovement()->MaxWalkSpeed = 600.f * 1.2;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
@@ -52,8 +52,8 @@ AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
 	// Setting up Knock Back Variables
 	knockToLeft = true;
 	knockingBack = false;
-	knockBackTime = 0.2;
-	knockBackSpeed = 20.f;
+	knockBackTime = 0.05;
+	knockBackSpeed = 100.f;
 	fps = 60;
 
 	// Loading Hurt Sounds
