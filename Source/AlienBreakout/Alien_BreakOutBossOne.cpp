@@ -25,13 +25,14 @@ AAlien_BreakOutBossOne::AAlien_BreakOutBossOne()
 	fps = 60;
 
 	summonCoolDown = 5;
-	attackCoolDown = 1.5;
+	attackCoolDown = 2;
 	teleportCoolDown = 15;
 
 
-	teleportLocation.Add(FVector(1207.272461, -1060.0, 390.0));
-	teleportLocation.Add(FVector(1207.272461, -1340.0, 490.0));
-	teleportLocation.Add(FVector(1207.272461, 490.0, 300.0));
+	teleportLocation.Add(FVector(-60.0, 250.0, 1802.0));
+	teleportLocation.Add(FVector(-60.0, -1340.0, 490.0));
+	teleportLocation.Add(FVector(-60.0, 490.0, 300.0));
+
 }
 
 void AAlien_BreakOutBossOne::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

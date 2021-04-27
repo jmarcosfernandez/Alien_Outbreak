@@ -39,11 +39,11 @@ AAlien_OutbreakCharacter::AAlien_OutbreakCharacter()
 	// Configure character movement
 	GetCharacterMovement()->bOrientRotationToMovement = true; // Face in the direction we are moving..
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 720.0f, 0.0f); // ...at this rotation rate
-	GetCharacterMovement()->GravityScale = 1.5f;
+	GetCharacterMovement()->GravityScale = 2.5f;
 	GetCharacterMovement()->AirControl = 0.80f;
-	GetCharacterMovement()->JumpZVelocity = 1000.f * 1.4;
+	GetCharacterMovement()->JumpZVelocity = 1000.f * 1.6;
 	GetCharacterMovement()->GroundFriction = 3.f;
-	GetCharacterMovement()->MaxWalkSpeed = 600.f * 1.2;
+	GetCharacterMovement()->MaxWalkSpeed = 600.f * 1.4;
 	GetCharacterMovement()->MaxFlySpeed = 600.f;
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
@@ -83,9 +83,9 @@ void AAlien_OutbreakCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	//auto Widget = CreateWidget<UPlayerHPWidget>(UGameplayStatics::GetPlayerController(this, 0), WidgetClass);
-	//Widget->Player = this;
-	//Widget->AddToViewport();
+	auto Widget = CreateWidget<UPlayerHPWidget>(UGameplayStatics::GetPlayerController(this, 0), WidgetClass);
+	Widget->Player = this;
+	Widget->AddToViewport();
 }
 
 void AAlien_OutbreakCharacter::Tick(float DeltaTime)
@@ -347,7 +347,6 @@ void AAlien_OutbreakCharacter::SetFSMState(GameStates newState)
 		Death_Exit();
 		break;
 	default:
-		UE_LOG(LogTemp, Error, TEXT("Unexpected state has not been implemented!"), newState);
 		return;
 	}
 
