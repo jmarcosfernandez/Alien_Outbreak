@@ -9,6 +9,8 @@
 
 #include "RockProjectileActor.h"
 
+#include <Runtime/Engine/Classes/Kismet/GameplayStatics.h>
+
 
 
 
@@ -232,6 +234,7 @@ void AAlien_BreakOutBossOne::Teleport_Exit()
 void AAlien_BreakOutBossOne::hitByPlayer(float minsHP) {
 	this->HP -= minsHP;
 	if (HP <= 0.f) {
+		UGameplayStatics::OpenLevel(GetWorld(), "End");
 		// Death
 	}
 }
