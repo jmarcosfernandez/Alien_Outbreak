@@ -53,7 +53,7 @@ void ARockProjectileActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, A
 
 		float rockY = this->GetActorLocation().Y;
 		if (!((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->Avoiding) {
-			((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.1f, rockY);
+			((AAlien_OutbreakCharacter*)GetWorld()->GetFirstPlayerController()->GetPawn())->onRockHit(0.04f, rockY);
 			this->Destroy();
 		}
 		else if (OtherActor->IsA(AAlien_BreakOutBossOne::StaticClass()) || OtherActor->IsA(ARockProjectileActor::StaticClass())) {
